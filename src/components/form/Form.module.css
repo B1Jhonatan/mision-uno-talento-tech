@@ -1,0 +1,42 @@
+.inputForm {
+  width: 25%;
+  min-width: 300px;
+  padding: 20px;
+  box-shadow: 2px 2px 10px gray;
+  border-radius: 10px;
+}
+
+.inputDiv {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
+.inputElementos {
+  width: calc(50% - 5px);
+}
+
+.inputMedidas {
+  padding: 10px;
+  width: calc(100% - 24px);
+  border: none;
+  border-bottom: 1px solid gray;
+  border-radius: 5px;
+}
+
+.botonForm {
+  margin-top: 10px;
+  width: calc(50% - 5px);
+  height: 35px;
+  background-color: blue;
+  border: 0px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.botonForm:hover {
+  background-color: rgba(0, 0, 255, 0.75);
+}
