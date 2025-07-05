@@ -15,3 +15,5 @@ class DataBase {
     this.ddbb = this.ddbb.filter((element) => element.id !== id);
   }
 }
+
+export default DataBase;

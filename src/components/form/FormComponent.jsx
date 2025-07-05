@@ -4,7 +4,13 @@ import style from "./Form.module.css";
 import BotonComponent from "../boton/BotonComponent";
 import ResultComponent from "../resultado/ResultComponent";
 
-const FormComponent = ({ result, onSubmit, onChange, onClickCalc }) => {
+const FormComponent = ({
+  result,
+  onSubmit,
+  onChange,
+  onClickCalc,
+  onClickSave,
+}) => {
   return (
     <form onSubmit={onSubmit} className={style.inputForm}>
       <div className={style.inputDiv}>
@@ -51,7 +57,11 @@ const FormComponent = ({ result, onSubmit, onChange, onClickCalc }) => {
           texto="Calcular"
           onClick={onClickCalc}
         />
-        <BotonComponent className={style.botonForm} texto="Agregar" />
+        <BotonComponent
+          className={style.botonForm}
+          texto="Agregar"
+          onClick={onClickSave}
+        />
       </div>
     </form>
   );

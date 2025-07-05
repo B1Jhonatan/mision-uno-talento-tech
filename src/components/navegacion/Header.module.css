@@ -1,0 +1,27 @@
+.navContain {
+  width: 20%;
+  min-width: 200px;
+  min-height: 100vh;
+  border-right: 2px solid gray;
+}
+
+.navLinks {
+  display: block;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navTittle {
+  display: block;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navLinks:hover {
+  background-color: black;
+  color: white;
+}

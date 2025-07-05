@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FormComponent from "../../components/form/FormComponent";
 
-export default function PageForm() {
+export default function PageForm({ db }) {
   const [formData, setFormData] = useState({
     tipo: "",
     cantidad: 0,
@@ -34,6 +34,10 @@ export default function PageForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
   };
+
+  const handleSaveBoton = () => {
+    db.addItem(formData);
+  };
   return (
     <div>
       <FormComponent
@@ -41,6 +45,7 @@ export default function PageForm() {
         onSubmit={handleSubmit}
         onClickCalc={handleCalcBoton}
         onChange={handleTextInput}
+        onClickSave={handleSaveBoton}
       />
     </div>
   );
