@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FormComponent from "../../components/form/FormComponent";
 
-export default function PageForm({ db }) {
+export default function PageForm({ db, setDb }) {
   const [formData, setFormData] = useState({
     tipo: "",
     cantidad: 0,
@@ -12,8 +12,11 @@ export default function PageForm({ db }) {
   });
   const handleTextInput = (event) => {
     const { name, value } = event.target;
-    setFormData({ ...formData, [name]: Number(value) });
-    console.log(name, value);
+    if (name === "tipo") {
+      setFormData({ ...formData, [name]: value });
+    } else {
+      setFormData({ ...formData, [name]: Number(value) });
+    }
   };
   console.log(formData);
   const handleCalcBoton = () => {
@@ -36,7 +39,16 @@ export default function PageForm({ db }) {
   };
 
   const handleSaveBoton = () => {
-    db.addItem(formData);
+    const newElement = {
+      id: new Date().getTime(),
+      tipo: formData.tipo,
+      cantidad: formData.cantidad,
+      largo: formData.largo,
+      ancho: formData.ancho,
+      alto: formData.alto,
+      resultado: formData.resultado,
+    };
+    setDb([...db, newElement]);
   };
   return (
     <div>
