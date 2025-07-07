@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FormComponent from "../../components/form/FormComponent";
+import styles from "./PageForm.module.css";
 
 export default function PageForm({ db, setDb }) {
   const [formData, setFormData] = useState({
@@ -51,7 +52,7 @@ export default function PageForm({ db, setDb }) {
     setDb([...db, newElement]);
   };
   return (
-    <div>
+    <div className={styles.contain3d}>
       <FormComponent
         result={formData.resultado}
         onSubmit={handleSubmit}

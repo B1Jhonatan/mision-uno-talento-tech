@@ -9,7 +9,7 @@ import HeaderComponent from "./components/navegacion/HeaderComponent";
 function App() {
   const [db, setDb] = useState([]);
   return (
-    <>
+    <div className="contain">
       <BrowserRouter>
         <HeaderComponent />
         <Routes>
@@ -21,7 +21,7 @@ function App() {
           <Route path="/historial" element={<PageHistorial db={db} />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
