@@ -6,19 +6,33 @@
 }
 
 .columnColor {
-  padding: 10px;
-  background-color: #6190ff;
-  color: wheat;
-  border-radius: 5px;
+  padding: 9px;
+  background-color: #0099ff;
+  color: white;
+  border-radius: 3px;
 }
 
 .columnText {
+  background-color: #dddddd;
+}
+
+.columnText td {
   text-align: center;
+  padding: 6px;
+  border-radius: 3px;
+}
+
+.columnText:nth-child(even) td {
+  background-color: #bbbbbb;
 }
 
 .containBoton {
   display: flex;
   justify-content: space-evenly;
+}
+
+.containTbody {
+  border: 1px solid gray;
 }
 
 .botonModificar {

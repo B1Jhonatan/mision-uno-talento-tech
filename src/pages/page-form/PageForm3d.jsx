@@ -53,6 +53,22 @@ export default function PageForm({ db, setDb }) {
       alto: formData.alto,
       resultado: formData.resultado,
     };
+    const alreadyExists = db.some((item) => item.tipo === newElement.tipo);
+    const resultCorrect = () => {
+      const calculatedVolume =
+        formData.largo * formData.ancho * formData.alto * formData.cantidad;
+      return calculatedVolume === formData.resultado;
+    };
+
+    if (alreadyExists) {
+      alert("Este elemento ya existe en la base de datos");
+      return;
+    }
+
+    if (!resultCorrect()) {
+      alert("El calculo esta erroneo");
+      return;
+    }
     setDb([...db, newElement]);
   };
   console.log(formData);

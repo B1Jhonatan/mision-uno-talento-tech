@@ -18,7 +18,10 @@ function App() {
             path="/elemento-3d"
             element={<PageForm3d db={db} setDb={setDb} />}
           />
-          <Route path="/historial" element={<PageHistorial db={db} />} />
+          <Route
+            path="/historial"
+            element={<PageHistorial db={db} setDb={setDb} />}
+          />
         </Routes>
       </BrowserRouter>
     </div>
