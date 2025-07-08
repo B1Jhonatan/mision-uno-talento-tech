@@ -8,9 +8,41 @@
 .columnColor {
   padding: 10px;
   background-color: #6190ff;
+  color: wheat;
   border-radius: 5px;
 }
 
 .columnText {
   text-align: center;
+}
+
+.containBoton {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.botonModificar {
+  border: none;
+  border-radius: 5px;
+  background-color: rgba(0, 128, 0, 0.9);
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.botonModificar:hover {
+  background-color: rgba(0, 128, 0, 0.8);
+}
+
+.botonEliminar {
+  border: none;
+  border-radius: 5px;
+  background-color: rgba(255, 0, 0, 0.9);
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.botonEliminar:hover {
+  background-color: rgba(255, 0, 0, 0.75);
 }

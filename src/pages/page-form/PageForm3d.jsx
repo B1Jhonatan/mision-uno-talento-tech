@@ -4,7 +4,9 @@ import styles from "./PageForm.module.css";
 
 export default function PageForm({ db, setDb }) {
   const [formData, setFormData] = useState({
+    elemento: "",
     tipo: "",
+    material: "",
     cantidad: 0,
     largo: 0,
     ancho: 0,
@@ -13,13 +15,13 @@ export default function PageForm({ db, setDb }) {
   });
   const handleTextInput = (event) => {
     const { name, value } = event.target;
-    if (name === "tipo") {
+    if (name === "tipo" || name === "elemento" || name === "material") {
       setFormData({ ...formData, [name]: value });
     } else {
       setFormData({ ...formData, [name]: Number(value) });
     }
   };
-  console.log(formData);
+
   const handleCalcBoton = () => {
     if (
       formData.largo === 0 ||
@@ -42,7 +44,9 @@ export default function PageForm({ db, setDb }) {
   const handleSaveBoton = () => {
     const newElement = {
       id: new Date().getTime(),
+      elemento: formData.elemento,
       tipo: formData.tipo,
+      material: formData.material,
       cantidad: formData.cantidad,
       largo: formData.largo,
       ancho: formData.ancho,
@@ -51,6 +55,7 @@ export default function PageForm({ db, setDb }) {
     };
     setDb([...db, newElement]);
   };
+  console.log(formData);
   return (
     <div className={styles.contain3d}>
       <FormComponent

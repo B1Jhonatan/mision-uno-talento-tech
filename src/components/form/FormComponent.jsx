@@ -3,6 +3,7 @@ import InputComponent from "../input/InputComponent";
 import style from "./Form.module.css";
 import BotonComponent from "../boton/BotonComponent";
 import ResultComponent from "../resultado/ResultComponent";
+import { MenuComponent } from "../menu/MenuComponent";
 
 const FormComponent = ({
   result,
@@ -11,8 +12,31 @@ const FormComponent = ({
   onClickCalc,
   onClickSave,
 }) => {
+  const elementos = [
+    "--select--",
+    "Ladrillos",
+    "Columnas",
+    "Pedestales",
+    "Zapatas",
+  ];
+  const materials = ["--select--", "Concreto", "Mortero", "Otros"];
   return (
     <form onSubmit={onSubmit} className={style.inputForm}>
+      <h2>Crear elementos</h2>
+      <div className={style.inputDiv}>
+        <MenuComponent
+          label="Elementos"
+          nameSelect="elemento"
+          options={elementos}
+          onChange={onChange}
+        />
+        <MenuComponent
+          label="Materiales"
+          nameSelect="material"
+          options={materials}
+          onChange={onChange}
+        />
+      </div>
       <div className={style.inputDiv}>
         <InputComponent
           className={style.inputElementos}

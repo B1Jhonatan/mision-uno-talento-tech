@@ -1,3 +1,4 @@
+import BotonComponent from "../boton/BotonComponent";
 import styles from "./Table.module.css";
 
 const TableComponent = ({ db, tablePlace }) => {
@@ -18,12 +19,22 @@ const TableComponent = ({ db, tablePlace }) => {
         {elementos.map((element, index) => (
           <tr key={element.id} className={styles.columnText}>
             <td>{index + 1}</td>
+            <td>{element.elemento}</td>
             <td>{element.tipo}</td>
+            <td>{element.material}</td>
             <td>{element.cantidad}</td>
             <td>{element.largo}</td>
             <td>{element.ancho}</td>
             <td>{element.alto}</td>
             <td>{element.resultado}</td>
+            <td className={styles.containBoton}>
+              <BotonComponent
+                id={element.id}
+                className={styles.botonModificar}
+                texto="Update"
+              />
+              <BotonComponent className={styles.botonEliminar} texto="Delete" />
+            </td>
           </tr>
         ))}
       </tbody>
