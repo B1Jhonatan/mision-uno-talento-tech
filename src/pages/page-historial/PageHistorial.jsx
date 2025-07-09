@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./PageHistorial.module.css";
 import TableComponent from "../../components/table/TableComponent";
+import { ElementoComponent } from "../../components/elemento/ElementoComponent";
 
 const PageHistorial = ({ db, setDb }) => {
   const table = {
@@ -15,15 +16,28 @@ const PageHistorial = ({ db, setDb }) => {
     column009: "Area",
     column010: "Operaciones",
   };
+
   const handleClickDelete = (id) => {
     setDb(db.filter((item) => item.id !== id));
   };
+
+  const onClickUpdate = (id, newItem) => {
+    const updatedItems = db.map((item) =>
+      item.id === id ? { ...item, ...newItem } : item
+    );
+    setDb(updatedItems);
+  };
+
   return (
     <div className={styles.containH}>
+      {db.map((elementooo) => (
+        <ElementoComponent elemento={elementooo} />
+      ))}
       <TableComponent
         db={db}
         tablePlace={table}
         onClickDelete={handleClickDelete}
+        onClickUpdate={onClickUpdate}
       />
     </div>
   );

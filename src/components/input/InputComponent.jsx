@@ -6,6 +6,7 @@ const InputComponent = ({
   placeholder,
   lable,
   classNameInput,
+  value,
 }) => {
   return (
     <div className={className}>
@@ -17,6 +18,7 @@ const InputComponent = ({
         className={classNameInput}
         onChange={onChange}
         placeholder={placeholder}
+        value={value}
       />
     </div>
   );

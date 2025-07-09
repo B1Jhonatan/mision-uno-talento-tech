@@ -1,38 +1,19 @@
-.containTable {
-  width: 80%;
-  min-width: 400px;
-  margin: auto;
-  margin-top: 10vh;
+.elemento {
+  width: 200px;
+
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 10px;
 }
 
-.columnColor {
-  padding: 9px;
-  background-color: #0099ff;
-  color: white;
-  border-radius: 3px;
-}
-
-.columnText {
-  background-color: #dddddd;
-}
-
-.columnText td {
-  text-align: center;
-  padding: 6px;
-  border-radius: 3px;
-}
-
-.columnText:nth-child(even) td {
-  background-color: #bbbbbb;
+.elementoDiv {
+  display: flex;
+  justify-content: space-between;
 }
 
 .containBoton {
   display: flex;
-  justify-content: space-evenly;
-}
-
-.containTbody {
-  border: 1px solid gray;
+  justify-content: space-between;
 }
 
 .botonModificar {
