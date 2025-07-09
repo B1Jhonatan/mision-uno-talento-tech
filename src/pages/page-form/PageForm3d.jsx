@@ -28,8 +28,11 @@ export default function PageForm({ db, setDb }) {
       formData.ancho === 0 ||
       formData.alto === 0 ||
       formData.cantidad === 0 ||
-      formData.tipo === ""
+      formData.tipo === "" ||
+      formData.elemento === "" ||
+      formData.material === ""
     ) {
+      alert("Ningun campo debe estar vacio");
       return;
     }
     const result =
@@ -71,7 +74,7 @@ export default function PageForm({ db, setDb }) {
     }
     setDb([...db, newElement]);
   };
-  console.log(formData);
+
   return (
     <div className={styles.contain3d}>
       <FormComponent

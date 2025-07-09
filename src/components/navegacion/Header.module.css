@@ -2,7 +2,7 @@
   width: 20%;
   min-width: 200px;
   min-height: 100vh;
-  border-right: 2px solid gray;
+  background-color: #eeeeee;
 }
 
 .navLinks {

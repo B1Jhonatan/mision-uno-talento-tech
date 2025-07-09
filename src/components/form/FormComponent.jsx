@@ -56,21 +56,21 @@ const FormComponent = ({
       <InputComponent
         className={style.inputDiv}
         onChange={onChange}
-        placeholder="Ingrese el largo del objeto"
+        placeholder="Ingrese el largo del objeto en 'Centimetros'"
         lable="Largo"
         classNameInput={style.inputMedidas}
       />
       <InputComponent
         className={style.inputDiv}
         onChange={onChange}
-        placeholder="Ingrese el ancho del objeto"
+        placeholder="Ingrese el ancho del objeto 'Centimetros'"
         lable="Ancho"
         classNameInput={style.inputMedidas}
       />
       <InputComponent
         className={style.inputDiv}
         onChange={onChange}
-        placeholder="Ingrese el alto del objeto"
+        placeholder="Ingrese el alto del objeto 'Centimetros'"
         lable="Alto"
         classNameInput={style.inputMedidas}
       />

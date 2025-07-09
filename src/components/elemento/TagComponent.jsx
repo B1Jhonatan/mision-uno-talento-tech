@@ -4,9 +4,9 @@ import styles from "./Elemento.module.css";
 export const TagComponent = ({ name, value }) => {
   const handleValue = () => {
     if (name === "Largo" || name === "Ancho" || name === "Alto") {
-      return value + " m";
+      return value + " cm";
     } else if (name === "Area") {
-      return value + " m3";
+      return value + " cm3";
     } else {
       return value;
     }

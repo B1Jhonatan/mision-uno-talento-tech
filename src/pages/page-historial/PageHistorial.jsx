@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./PageHistorial.module.css";
-import TableComponent from "../../components/table/TableComponent";
 import { ElementoComponent } from "../../components/elemento/ElementoComponent";
 import FormUpdate from "../../components/form/FormUpdate";
 
@@ -64,6 +63,28 @@ const PageHistorial = ({ db, setDb }) => {
   };
 
   const onClickUpdate = (id, newItem) => {
+    if (
+      formData.largo === 0 ||
+      formData.ancho === 0 ||
+      formData.alto === 0 ||
+      formData.cantidad === 0 ||
+      formData.tipo === "" ||
+      formData.elemento === "" ||
+      formData.material === ""
+    ) {
+      alert("Ningun campo debe estar vacio");
+      return;
+    }
+    const resultCorrect = () => {
+      const calculatedVolume =
+        formData.largo * formData.ancho * formData.alto * formData.cantidad;
+      return calculatedVolume === formData.resultado;
+    };
+    if (!resultCorrect()) {
+      alert("El calculo esta erroneo, no se guardaran los cambios");
+      setShowForm(true);
+      return;
+    }
     const updatedItems = db.map((item) =>
       item.id === id ? { ...item, ...newItem } : item
     );
