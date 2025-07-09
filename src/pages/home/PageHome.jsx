@@ -1,10 +1,11 @@
 import React from "react";
+import styles from "./PageHome.module.css";
 
 const PageHome = () => {
   return (
-    <div>
-      <h1>Home page</h1>
-    </div>
+    <section className={styles.pageContain}>
+      <h1 className={styles.text}>Bienvenido</h1>
+    </section>
   );
 };
 

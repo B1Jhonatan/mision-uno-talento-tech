@@ -1,0 +1,10 @@
+.pageContain {
+  width: 80%;
+  height: 100vh;
+  align-content: center;
+  text-align: center;
+}
+
+.text {
+  font-size: 40px;
+}
