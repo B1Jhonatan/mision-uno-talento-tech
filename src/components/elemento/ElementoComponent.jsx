@@ -3,10 +3,10 @@ import styles from "./Elemento.module.css";
 import { TagComponent } from "./TagComponent";
 import BotonComponent from "../boton/BotonComponent";
 
-export const ElementoComponent = ({ elemento }) => {
+export const ElementoComponent = ({ elemento, onClickDelete, handleSpan }) => {
   return (
     <article className={styles.elemento}>
-      <strong>{elemento.elemento}</strong>
+      <strong className={styles.containStrong}>{elemento.elemento}</strong>
       <TagComponent name={"Tipo"} value={elemento.tipo} />
       <TagComponent name={"Cantidad"} value={elemento.cantidad} />
       <TagComponent name={"Largo"} value={elemento.largo} />
@@ -18,13 +18,13 @@ export const ElementoComponent = ({ elemento }) => {
           id={elemento.id}
           className={styles.botonModificar}
           texto="Update"
-          //onClick={() => handleSpan(elemento)}
+          onClick={() => handleSpan(elemento)}
         />
         <BotonComponent
           id={elemento.id}
           className={styles.botonEliminar}
           texto="Delete"
-          //onClick={() => onClickDelete(elemento.id)}
+          onClick={() => onClickDelete(elemento.id)}
         />
       </div>
     </article>

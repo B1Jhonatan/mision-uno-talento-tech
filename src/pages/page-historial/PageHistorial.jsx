@@ -1,24 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./PageHistorial.module.css";
 import TableComponent from "../../components/table/TableComponent";
 import { ElementoComponent } from "../../components/elemento/ElementoComponent";
+import FormUpdate from "../../components/form/FormUpdate";
 
 const PageHistorial = ({ db, setDb }) => {
-  const table = {
-    column001: "Id",
-    column002: "Elemento",
-    column003: "Tipo",
-    column004: "Material",
-    column005: "Cantidad",
-    column006: "Largo",
-    column007: "Ancho",
-    column008: "Alto",
-    column009: "Area",
-    column010: "Operaciones",
+  const [formData, setFormData] = useState({
+    elemento: "",
+    tipo: "",
+    material: "",
+    cantidad: 0,
+    largo: 0,
+    ancho: 0,
+    alto: 0,
+    resultado: 0,
+  });
+  const [showForm, setShowForm] = useState(false);
+
+  const handleSpan = (element) => {
+    setFormData(element);
+    setShowForm(true);
   };
 
   const handleClickDelete = (id) => {
     setDb(db.filter((item) => item.id !== id));
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+  const newElement = {
+    id: new Date().getTime(),
+    elemento: formData.elemento,
+    tipo: formData.tipo,
+    material: formData.material,
+    cantidad: formData.cantidad,
+    largo: formData.largo,
+    ancho: formData.ancho,
+    alto: formData.alto,
+    resultado: formData.resultado,
+  };
+  const handleTextInput = (event) => {
+    const { name, value } = event.target;
+    if (name === "tipo" || name === "elemento" || name === "material") {
+      setFormData({ ...formData, [name]: value });
+    } else {
+      setFormData({ ...formData, [name]: Number(value) });
+    }
+  };
+
+  const handleCalcBoton = () => {
+    if (
+      formData.largo === 0 ||
+      formData.ancho === 0 ||
+      formData.alto === 0 ||
+      formData.cantidad === 0 ||
+      formData.tipo === ""
+    ) {
+      return;
+    }
+    const result =
+      formData.largo * formData.ancho * formData.alto * formData.cantidad;
+    setFormData({ ...formData, ["resultado"]: Number(result) });
   };
 
   const onClickUpdate = (id, newItem) => {
@@ -29,17 +71,32 @@ const PageHistorial = ({ db, setDb }) => {
   };
 
   return (
-    <div className={styles.containH}>
-      {db.map((elementooo) => (
-        <ElementoComponent elemento={elementooo} />
-      ))}
-      <TableComponent
-        db={db}
-        tablePlace={table}
-        onClickDelete={handleClickDelete}
-        onClickUpdate={onClickUpdate}
-      />
-    </div>
+    <section className={styles.containH}>
+      {showForm && (
+        <span>
+          <FormUpdate
+            result={formData.resultado}
+            onSubmit={handleSubmit}
+            onClickCalc={handleCalcBoton}
+            onChange={handleTextInput}
+            onClickUpdate={() => {
+              onClickUpdate(formData.id, newElement);
+              setShowForm(false);
+            }}
+            elemento={formData}
+          />
+        </span>
+      )}
+      <div className={styles.containE}>
+        {db.map((elemento) => (
+          <ElementoComponent
+            elemento={elemento}
+            onClickDelete={handleClickDelete}
+            handleSpan={handleSpan}
+          />
+        ))}
+      </div>
+    </section>
   );
 };
 
