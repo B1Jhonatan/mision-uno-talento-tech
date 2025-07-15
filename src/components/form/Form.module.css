@@ -4,8 +4,9 @@
   min-width: 300px;
   margin-top: 20px;
   padding: 20px;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 3px gray;
   border-radius: 10px;
+  background-color: white;
 }
 
 .inputDiv {
@@ -32,7 +33,7 @@
   margin-top: 10px;
   width: calc(50% - 5px);
   height: 35px;
-  background-color: blue;
+  background-color: #09f;
   border: 0px;
   border-radius: 5px;
   color: white;
@@ -40,5 +41,5 @@
 }
 
 .botonForm:hover {
-  background-color: rgba(0, 0, 255, 0.75);
+  background-color: rgba(0, 0, 255);
 }

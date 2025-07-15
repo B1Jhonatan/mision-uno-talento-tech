@@ -24,15 +24,15 @@ export default function PageForm({ db, setDb }) {
 
   const handleCalcBoton = () => {
     if (
-      formData.largo === 0 ||
-      formData.ancho === 0 ||
-      formData.alto === 0 ||
-      formData.cantidad === 0 ||
+      formData.largo <= 0 ||
+      formData.ancho <= 0 ||
+      formData.alto <= 0 ||
+      formData.cantidad <= 0 ||
       formData.tipo === "" ||
       formData.elemento === "" ||
       formData.material === ""
     ) {
-      alert("Ningun campo debe estar vacio");
+      alert("Ningun campo debe estar vacio ni negativo");
       return;
     }
     const result =

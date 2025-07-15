@@ -1,6 +1,7 @@
 .pageContain {
   width: 80%;
   height: 100vh;
+  background-color: #eee;
   align-content: center;
   text-align: center;
 }

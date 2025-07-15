@@ -2,7 +2,8 @@
   width: 20%;
   min-width: 200px;
   min-height: 100vh;
-  background-color: #eeeeee;
+  background-color: #09f;
+  color: white;
 }
 
 .navLinks {
@@ -22,6 +23,17 @@
 }
 
 .navLinks:hover {
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
+}
+
+.select {
+  display: block;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-decoration: none;
+  color: inherit;
+  background-color: #eee;
+  color: black;
 }

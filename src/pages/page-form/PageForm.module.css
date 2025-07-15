@@ -1,4 +1,6 @@
 .contain3d {
   align-content: center;
   width: 80%;
+  height: 100vh;
+  background-color: #eee;
 }

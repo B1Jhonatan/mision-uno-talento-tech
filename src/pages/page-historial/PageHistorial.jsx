@@ -49,11 +49,13 @@ const PageHistorial = ({ db, setDb }) => {
 
   const handleCalcBoton = () => {
     if (
-      formData.largo === 0 ||
-      formData.ancho === 0 ||
-      formData.alto === 0 ||
-      formData.cantidad === 0 ||
-      formData.tipo === ""
+      formData.largo <= 0 ||
+      formData.ancho <= 0 ||
+      formData.alto <= 0 ||
+      formData.cantidad <= 0 ||
+      formData.tipo === "" ||
+      formData.elemento === "" ||
+      formData.material === ""
     ) {
       return;
     }
@@ -64,10 +66,10 @@ const PageHistorial = ({ db, setDb }) => {
 
   const onClickUpdate = (id, newItem) => {
     if (
-      formData.largo === 0 ||
-      formData.ancho === 0 ||
-      formData.alto === 0 ||
-      formData.cantidad === 0 ||
+      formData.largo <= 0 ||
+      formData.ancho <= 0 ||
+      formData.alto <= 0 ||
+      formData.cantidad <= 0 ||
       formData.tipo === "" ||
       formData.elemento === "" ||
       formData.material === ""
