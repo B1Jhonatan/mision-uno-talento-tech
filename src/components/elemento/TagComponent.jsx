@@ -5,7 +5,7 @@ export const TagComponent = ({ name, value }) => {
   const handleValue = () => {
     if (name === "Largo" || name === "Ancho" || name === "Alto") {
       return value + " cm";
-    } else if (name === "Area") {
+    } else if (name === "Area unidad" || name === "Area total") {
       return value + " cm3";
     } else {
       return value;

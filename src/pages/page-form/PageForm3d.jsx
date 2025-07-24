@@ -80,8 +80,12 @@ export default function PageForm() {
     }
 
     const objeto = objectJson(newElement);
-    console.log(objeto);
-    fetchPostUpdate("https://api-elementos.onrender.com/api/elemento", objeto);
+
+    fetchPostUpdate(
+      "https://api-elementos.onrender.com/api/elemento",
+      objeto,
+      "POST"
+    );
   };
 
   return (

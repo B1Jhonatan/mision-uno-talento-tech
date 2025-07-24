@@ -3,16 +3,23 @@ import styles from "./Elemento.module.css";
 import { TagComponent } from "./TagComponent";
 import BotonComponent from "../boton/BotonComponent";
 
-export const ElementoComponent = ({ elemento, onClickDelete, handleSpan }) => {
+export const ElementoComponent = ({
+  key,
+  elemento,
+  onClickDelete,
+  handleSpan,
+}) => {
   return (
-    <article className={styles.elemento}>
-      <strong className={styles.containStrong}>{elemento.elemento}</strong>
-      <TagComponent name={"Tipo"} value={elemento.tipo} />
+    <article className={styles.elemento} key={key}>
+      <h3>{elemento.tipo?.tipo}</h3> <br />
+      <TagComponent name={"Elemento"} value={elemento.elemento} />
       <TagComponent name={"Cantidad"} value={elemento.cantidad} />
-      <TagComponent name={"Largo"} value={elemento.largo} />
-      <TagComponent name={"Ancho"} value={elemento.ancho} />
-      <TagComponent name={"Alto"} value={elemento.alto} />
-      <TagComponent name={"Area"} value={elemento.resultado} />
+      <TagComponent name={"Material"} value={elemento.material?.material} />
+      <TagComponent name={"Largo"} value={elemento.medidas?.largo} />
+      <TagComponent name={"Ancho"} value={elemento.medidas?.ancho} />
+      <TagComponent name={"Alto"} value={elemento.medidas?.alto} />
+      <TagComponent name={"Area unidad"} value={elemento.areas?.areaUnidad} />
+      <TagComponent name={"Area total"} value={elemento.areas?.areaTotal} />
       <div className={styles.containBoton}>
         <BotonComponent
           id={elemento.id}

@@ -1,6 +1,6 @@
-export const fetchGetDelete = async (url) => {
+export const fetchGetDelete = async (url, method) => {
   try {
-    const res = await fetch(url, { method: "GET" });
+    const res = await fetch(url, { method });
     if (!res.ok) {
       return;
     }
@@ -11,10 +11,10 @@ export const fetchGetDelete = async (url) => {
   }
 };
 
-export const fetchPostUpdate = async (url, objeto) => {
+export const fetchPostUpdate = async (url, objeto, method) => {
   try {
     const res = await fetch(url, {
-      method: "POST",
+      method,
       headers: {
         "Content-Type": "application/json",
       },

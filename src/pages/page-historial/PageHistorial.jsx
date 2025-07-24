@@ -1,43 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./PageHistorial.module.css";
 import { ElementoComponent } from "../../components/elemento/ElementoComponent";
 import FormUpdate from "../../components/form/FormUpdate";
+import { fetchGetDelete, fetchPostUpdate } from "../../files-js/FetchFile";
+import { objectJson } from "../../files-js/ObjectDto";
 
-const PageHistorial = ({ db, setDb }) => {
+const PageHistorial = () => {
   const [formData, setFormData] = useState({
     elemento: "",
-    tipo: "",
-    material: "",
+    tipo: 0,
+    material: 0,
     cantidad: 0,
     largo: 0,
     ancho: 0,
     alto: 0,
-    resultado: 0,
+    areaUnidad: 0,
+    areaTotal: 0,
   });
+
   const [showForm, setShowForm] = useState(false);
+  const [datosDb, setDatosDb] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const datosFetch = await fetchGetDelete(
+          "https://api-elementos.onrender.com/api/tipos-elementos",
+          "GET"
+        );
+        setDatosDb(datosFetch);
+      } catch (error) {
+        return error;
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleSpan = (element) => {
-    setFormData(element);
+    setFormData({
+      id: element.id,
+      elemento: element.elemento,
+      tipo: element.tipoId,
+      material: element.materialId,
+      cantidad: element.cantidad,
+      largo: element.medidas?.largo || 0,
+      ancho: element.medidas?.ancho || 0,
+      alto: element.medidas?.alto || 0,
+      areaUnidad: element.areas?.areaUnidad || 0,
+      areaTotal: element.areas?.areaTotal || 0,
+    });
     setShowForm(true);
   };
 
-  const handleClickDelete = (id) => {
-    setDb(db.filter((item) => item.id !== id));
+  const handleClickDelete = async (id) => {
+    try {
+      await fetchGetDelete(
+        `https://api-elementos.onrender.com/api/elemento/${id}`,
+        "DELETE"
+      );
+      // Actualiza el estado eliminando el elemento con ese id
+      setDatosDb((prevDatos) =>
+        prevDatos.map((tipo) => ({
+          ...tipo,
+          elemento: tipo.elemento?.filter((el) => el.id !== id),
+        }))
+      );
+    } catch (error) {
+      console.error("Error al eliminar:", error);
+    }
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
   };
-  const newElement = {
-    id: new Date().getTime(),
-    elemento: formData.elemento,
-    tipo: formData.tipo,
-    material: formData.material,
-    cantidad: formData.cantidad,
-    largo: formData.largo,
-    ancho: formData.ancho,
-    alto: formData.alto,
-    resultado: formData.resultado,
-  };
+
   const handleTextInput = (event) => {
     const { name, value } = event.target;
     if (name === "tipo" || name === "elemento" || name === "material") {
@@ -53,44 +89,68 @@ const PageHistorial = ({ db, setDb }) => {
       formData.ancho <= 0 ||
       formData.alto <= 0 ||
       formData.cantidad <= 0 ||
-      formData.tipo === "" ||
+      formData.tipo === 0 ||
       formData.elemento === "" ||
-      formData.material === ""
+      formData.material === 0
     ) {
       return;
     }
-    const result =
+
+    const unidad = formData.largo * formData.ancho * formData.alto;
+    const total =
       formData.largo * formData.ancho * formData.alto * formData.cantidad;
-    setFormData({ ...formData, ["resultado"]: Number(result) });
+    setFormData({
+      ...formData,
+      ["areaUnidad"]: Number(unidad),
+      ["areaTotal"]: Number(total),
+    });
   };
 
-  const onClickUpdate = (id, newItem) => {
+  const onClickUpdate = (id) => {
+    const newElement = {
+      elemento: formData.elemento,
+      tipoId: formData.tipo,
+      materialId: formData.material,
+      cantidad: formData.cantidad,
+      largo: formData.largo,
+      ancho: formData.ancho,
+      alto: formData.alto,
+      areaUnidad: formData.areaUnidad,
+      areaTotal: formData.areaTotal,
+    };
     if (
       formData.largo <= 0 ||
       formData.ancho <= 0 ||
       formData.alto <= 0 ||
       formData.cantidad <= 0 ||
-      formData.tipo === "" ||
+      formData.tipo === 0 ||
       formData.elemento === "" ||
-      formData.material === ""
+      formData.material === 0
     ) {
       alert("Ningun campo debe estar vacio");
       return;
     }
+    console.log(formData);
     const resultCorrect = () => {
       const calculatedVolume =
         formData.largo * formData.ancho * formData.alto * formData.cantidad;
-      return calculatedVolume === formData.resultado;
+      return calculatedVolume === formData.areaTotal;
     };
     if (!resultCorrect()) {
       alert("El calculo esta erroneo, no se guardaran los cambios");
       setShowForm(true);
       return;
     }
-    const updatedItems = db.map((item) =>
-      item.id === id ? { ...item, ...newItem } : item
+
+    const objeto = objectJson(newElement);
+
+    console.log(objeto);
+
+    fetchPostUpdate(
+      `https://api-elementos.onrender.com/api/elemento/${id}`,
+      objeto,
+      "PUT"
     );
-    setDb(updatedItems);
   };
 
   return (
@@ -98,12 +158,11 @@ const PageHistorial = ({ db, setDb }) => {
       {showForm && (
         <span>
           <FormUpdate
-            result={formData.resultado}
             onSubmit={handleSubmit}
             onClickCalc={handleCalcBoton}
             onChange={handleTextInput}
             onClickUpdate={() => {
-              onClickUpdate(formData.id, newElement);
+              onClickUpdate(formData.id);
               setShowForm(false);
             }}
             elemento={formData}
@@ -111,8 +170,9 @@ const PageHistorial = ({ db, setDb }) => {
         </span>
       )}
       <div className={styles.containE}>
-        {db.map((elemento) => (
+        {datosDb.map((elemento) => (
           <ElementoComponent
+            key={elemento.id}
             elemento={elemento}
             onClickDelete={handleClickDelete}
             handleSpan={handleSpan}

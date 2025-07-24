@@ -23,11 +23,13 @@ const FormComponent = ({
     const fetchInit = async () => {
       try {
         const tiposDb = await fetchGetDelete(
-          "https://api-elementos.onrender.com/api/tipos"
+          "https://api-elementos.onrender.com/api/tipos",
+          "GET"
         );
         setTipos([{ id: 0, tipo: "--select--" }, ...tiposDb]);
         const materialesDb = await fetchGetDelete(
-          "https://api-elementos.onrender.com/api/materieles"
+          "https://api-elementos.onrender.com/api/materieles",
+          "GET"
         );
         serMateriales([{ id: 0, material: "--select--" }, ...materialesDb]);
       } catch (error) {
@@ -36,8 +38,6 @@ const FormComponent = ({
     };
     fetchInit();
   }, []);
-  console.log(tipos);
-  console.log(materiales);
   return (
     <form onSubmit={onSubmit} className={style.inputForm}>
       <h2>Crear elementos</h2>
