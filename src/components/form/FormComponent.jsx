@@ -1,39 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InputComponent from "../input/InputComponent";
 import style from "./Form.module.css";
 import BotonComponent from "../boton/BotonComponent";
 import ResultComponent from "../resultado/ResultComponent";
 import { MenuComponent } from "../menu/MenuComponent";
+import { fetchGetDelete } from "../../files-js/FetchFile";
 
 const FormComponent = ({
-  result,
+  areaUnidad,
+  areaTotal,
   onSubmit,
   onChange,
   onClickCalc,
   onClickSave,
 }) => {
-  const elementos = [
-    "--select--",
-    "Ladrillos",
-    "Columnas",
-    "Pedestales",
-    "Zapatas",
-  ];
-  const materials = ["--select--", "Concreto", "Mortero", "Otros"];
+  const [tipos, setTipos] = useState([{ id: 0, tipo: "--select--" }]);
+  const [materiales, serMateriales] = useState([
+    { id: 0, material: "--select--" },
+  ]);
+
+  useEffect(() => {
+    const fetchInit = async () => {
+      try {
+        const tiposDb = await fetchGetDelete(
+          "https://api-elementos.onrender.com/api/tipos"
+        );
+        setTipos([{ id: 0, tipo: "--select--" }, ...tiposDb]);
+        const materialesDb = await fetchGetDelete(
+          "https://api-elementos.onrender.com/api/materieles"
+        );
+        serMateriales([{ id: 0, material: "--select--" }, ...materialesDb]);
+      } catch (error) {
+        return error;
+      }
+    };
+    fetchInit();
+  }, []);
+  console.log(tipos);
+  console.log(materiales);
   return (
     <form onSubmit={onSubmit} className={style.inputForm}>
       <h2>Crear elementos</h2>
       <div className={style.inputDiv}>
         <MenuComponent
-          label="Elementos"
-          nameSelect="elemento"
-          options={elementos}
+          label="Tipos"
+          nameSelect="tipo"
+          lista={tipos}
           onChange={onChange}
         />
         <MenuComponent
           label="Materiales"
           nameSelect="material"
-          options={materials}
+          lista={materiales}
           onChange={onChange}
         />
       </div>
@@ -42,7 +60,7 @@ const FormComponent = ({
           className={style.inputElementos}
           onChange={onChange}
           placeholder="Nombre del elemento"
-          lable="Tipo"
+          lable="Elemento"
           classNameInput={style.inputMedidas}
         />
         <InputComponent
@@ -74,7 +92,16 @@ const FormComponent = ({
         lable="Alto"
         classNameInput={style.inputMedidas}
       />
-      <ResultComponent className={style.inputDiv} result={result} />
+      <ResultComponent
+        className={style.inputDiv}
+        result={areaUnidad}
+        name={"Area unidad: "}
+      />
+      <ResultComponent
+        className={style.inputDiv}
+        result={areaTotal}
+        name={"Area total: "}
+      />
       <div className={style.inputDiv}>
         <BotonComponent
           className={style.botonForm}

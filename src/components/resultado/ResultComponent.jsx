@@ -1,10 +1,10 @@
 import React from "react";
 
-const ResultComponent = ({ className, result }) => {
+const ResultComponent = ({ className, result, name }) => {
   return (
     <div className={className}>
       <p>
-        <strong>Area: </strong>
+        <strong>{name}</strong>
         {result}
       </p>
     </div>

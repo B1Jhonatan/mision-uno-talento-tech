@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import FormComponent from "../../components/form/FormComponent";
 import styles from "./PageForm.module.css";
+import { objectJson } from "../../files-js/ObjectDto.js";
+import { fetchPostUpdate } from "../../files-js/FetchFile.js";
 
-export default function PageForm({ db, setDb }) {
+export default function PageForm() {
   const [formData, setFormData] = useState({
     elemento: "",
-    tipo: "",
-    material: "",
+    tipo: 0,
+    material: 0,
     cantidad: 0,
     largo: 0,
     ancho: 0,
     alto: 0,
-    resultado: 0,
+    areaUnidad: 0,
+    areaTotal: 0,
   });
+
   const handleTextInput = (event) => {
     const { name, value } = event.target;
-    if (name === "tipo" || name === "elemento" || name === "material") {
+    if (name === "elemento") {
       setFormData({ ...formData, [name]: value });
     } else {
       setFormData({ ...formData, [name]: Number(value) });
@@ -28,16 +32,23 @@ export default function PageForm({ db, setDb }) {
       formData.ancho <= 0 ||
       formData.alto <= 0 ||
       formData.cantidad <= 0 ||
-      formData.tipo === "" ||
+      formData.tipo === 0 ||
       formData.elemento === "" ||
-      formData.material === ""
+      formData.material === 0
     ) {
       alert("Ningun campo debe estar vacio ni negativo");
       return;
     }
-    const result =
+
+    const unidad = formData.largo * formData.ancho * formData.alto;
+    const total =
       formData.largo * formData.ancho * formData.alto * formData.cantidad;
-    setFormData({ ...formData, ["resultado"]: Number(result) });
+
+    setFormData({
+      ...formData,
+      ["areaUnidad"]: Number(unidad),
+      ["areaTotal"]: Number(total),
+    });
   };
 
   const handleSubmit = (event) => {
@@ -46,39 +57,38 @@ export default function PageForm({ db, setDb }) {
 
   const handleSaveBoton = () => {
     const newElement = {
-      id: new Date().getTime(),
       elemento: formData.elemento,
-      tipo: formData.tipo,
-      material: formData.material,
+      tipoId: formData.tipo,
+      materialId: formData.material,
       cantidad: formData.cantidad,
       largo: formData.largo,
       ancho: formData.ancho,
       alto: formData.alto,
-      resultado: formData.resultado,
+      areaUnidad: formData.areaUnidad,
+      areaTotal: formData.areaTotal,
     };
-    const alreadyExists = db.some((item) => item.tipo === newElement.tipo);
+
     const resultCorrect = () => {
       const calculatedVolume =
         formData.largo * formData.ancho * formData.alto * formData.cantidad;
-      return calculatedVolume === formData.resultado;
+      return calculatedVolume === formData.areaTotal;
     };
-
-    if (alreadyExists) {
-      alert("Este elemento ya existe en la base de datos");
-      return;
-    }
 
     if (!resultCorrect()) {
       alert("El calculo esta erroneo");
       return;
     }
-    setDb([...db, newElement]);
+
+    const objeto = objectJson(newElement);
+    console.log(objeto);
+    fetchPostUpdate("https://api-elementos.onrender.com/api/elemento", objeto);
   };
 
   return (
     <div className={styles.contain3d}>
       <FormComponent
-        result={formData.resultado}
+        areaUnidad={formData.areaUnidad}
+        areaTotal={formData.areaTotal}
         onSubmit={handleSubmit}
         onClickCalc={handleCalcBoton}
         onChange={handleTextInput}

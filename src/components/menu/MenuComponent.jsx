@@ -4,7 +4,7 @@ import styles from "./Menu.module.css";
 export const MenuComponent = ({
   label,
   nameSelect,
-  options,
+  lista,
   onChange,
   value,
 }) => {
@@ -19,9 +19,9 @@ export const MenuComponent = ({
         key={label.toLowerCase()}
         value={value}
       >
-        {options.map((op) => (
-          <option value={op} key={op}>
-            {op}
+        {lista.map((op) => (
+          <option value={op.id} key={op.id}>
+            {op[nameSelect]}
           </option>
         ))}
       </select>
