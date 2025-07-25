@@ -21,20 +21,21 @@ const PageHistorial = () => {
   const [showForm, setShowForm] = useState(false);
   const [datosDb, setDatosDb] = useState([]);
 
+  const fetchData = async () => {
+    try {
+      const datosFetch = await fetchGetDelete(
+        "https://api-elementos.onrender.com/api/tipos-elementos",
+        "GET"
+      );
+      setDatosDb(datosFetch);
+    } catch (error) {
+      return error;
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const datosFetch = await fetchGetDelete(
-          "https://api-elementos.onrender.com/api/tipos-elementos",
-          "GET"
-        );
-        setDatosDb(datosFetch);
-      } catch (error) {
-        return error;
-      }
-    };
     fetchData();
-  }, []);
+  }, [datosDb]);
 
   const handleSpan = (element) => {
     setFormData({
@@ -54,17 +55,14 @@ const PageHistorial = () => {
 
   const handleClickDelete = async (id) => {
     try {
-      await fetchGetDelete(
+      const res = await fetchGetDelete(
         `https://api-elementos.onrender.com/api/elemento/${id}`,
         "DELETE"
       );
       // Actualiza el estado eliminando el elemento con ese id
-      setDatosDb((prevDatos) =>
-        prevDatos.map((tipo) => ({
-          ...tipo,
-          elemento: tipo.elemento?.filter((el) => el.id !== id),
-        }))
-      );
+      setDatosDb((prevDatos) => prevDatos.filter((el) => el.id !== id));
+
+      
     } catch (error) {
       console.error("Error al eliminar:", error);
     }
@@ -130,7 +128,6 @@ const PageHistorial = () => {
       alert("Ningun campo debe estar vacio");
       return;
     }
-    console.log(formData);
     const resultCorrect = () => {
       const calculatedVolume =
         formData.largo * formData.ancho * formData.alto * formData.cantidad;
@@ -144,13 +141,14 @@ const PageHistorial = () => {
 
     const objeto = objectJson(newElement);
 
-    console.log(objeto);
-
     fetchPostUpdate(
       `https://api-elementos.onrender.com/api/elemento/${id}`,
       objeto,
       "PUT"
     );
+
+    fetchData();
+    
   };
 
   return (
